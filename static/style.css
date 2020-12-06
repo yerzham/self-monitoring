@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  --primary: #944ae9;
+  --primary-dim: #a161eb;
+  --blue: #944ae9;
+}
+
+#title {
+	
+}
+
+body {
+	background-color: #fafafa;
+	font-family: 'Poppins', "Helvetica Neue", Arial !important;
+}
+
+p {
+	font-family: 'Open Sans', "Helvetica Neue", Arial !important;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dim);
+  border: none;
+}
+
+.btn-primary:active:focus, .btn-primary:focus, .btn-primary:active {
+  background-color: var(--primary)!important;
+  border-color: var(--primary-dim)!important;
+}
+
+.invalid-message {
+  width: 100%;
+	margin-top: 0.25rem;
+	margin-bottom: 0.5rem;
+  font-size: 80%;
+  color: #dc3545;
+}
