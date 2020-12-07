@@ -1,0 +1,118 @@
+<%- include('../partials/header.ejs', {authenticated, user, page: "reporting"}) %>
+<h1 class="mt-4 mb-3">Select the reporting option:</h1>
+<div class="row">
+	<div class="col-6">
+		<div class="row justify-content-center align-items-center" style="height: 150px;">
+			<div class="col-6">
+				<button class="btn btn-lg btn-primary" style="width: 100%;" onclick="showMorningForm()">Morning</button>
+				<p class="text-center"><small>Not yet reported</small></p>
+			</div>
+		</div>
+	</div>
+	<div class="col-6">
+		<div class="row justify-content-center align-items-center" style="height: 150px;">
+			<div class="col-6">
+				<button class="btn btn-lg btn-primary" style="width: 100%;" onclick="showEveningForm()">Evening</button>
+				<p class="text-center"><small>Not yet reported</small></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <form id="evening-form" class="d-none">
+			<div class="row mb-4">
+				<div class="col-lg-6">
+					<div class="row mb-4">
+						<label class="col-md-4">Date</label>
+						<div class="col-md-8">
+							<input type="date" class="form-control" name="day">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="row mb-3">
+						<label class="col-md-4">Time spent on sports and exercise (hours)</label>
+						<div class="col-md-8">
+							<input type="number" class="form-control" name="exercises_duration">
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label class="col-md-4">Time spent studying (hours)</label>
+						<div class="col-md-8">
+							<input type="number" class="form-control" name="study_duration">
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="row mb-3">
+						<label class="col-md-4">Regularity and quality of eating</label>
+						<div class="col-md-8">
+							<input type="range" class="form-range" min="0" max="5" step="1" name="eating_quality">
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label class="col-md-4">Generic mood</label>
+						<div class="col-md-8">
+							<input type="range" class="form-range" min="0" max="5" step="1" name="generic_mood_evening">
+						</div>
+					</div>
+				</div>
+				<div class="d-flex justify-content-end">
+					<button type="submit" class="btn btn-lg btn-primary">Submit</button>
+				</div>
+			</div>
+		</form>
+		<form id="morning-form" class="d-none">
+			<div class="row mb-4">
+				<div class="col-lg-6">
+					<div class="row mb-4">
+						<label class="col-md-4">Date</label>
+						<div class="col-md-8">
+							<input type="date" class="form-control" name="day">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="row mb-3">
+						<label class="col-md-4">Sleep duration (hours)</label>
+						<div class="col-md-8">
+							<input type="number" class="form-control" name="exercises_duration">
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label class="col-md-4">Sleep quality</label>
+						<div class="col-md-8">
+							<input type="range" class="form-range" min="0" max="5" step="1" name="sleep_quality">
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label class="col-md-4">Generic mood</label>
+						<div class="col-md-8">
+							<input type="range" class="form-range" min="0" max="5" step="1" name="generic_mood_morning">
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6"></div>
+				<div class="d-flex justify-content-end">
+					<button type="submit" class="btn btn-lg btn-primary">Submit</button>
+				</div>
+			</div>
+		</form>
+  </div>
+</div>
+<script>
+	showEveningForm = () => {
+		document.getElementById("evening-form").classList.remove("d-none");
+		document.getElementById("morning-form").classList.add("d-none");
+	}
+	showMorningForm = () => {
+		document.getElementById("morning-form").classList.remove("d-none");
+		document.getElementById("evening-form").classList.add("d-none");
+	}
+</script>
+<%- include('../partials/footer.ejs') %>

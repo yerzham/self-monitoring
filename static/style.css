@@ -2,9 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
-  --primary: #944ae9;
-  --primary-dim: #a161eb;
-  --blue: #944ae9;
+  --primary: #9c59e7;
+  --primary-dim: #a569e9;
+  --blue: #9c59e7;
 }
 
 #title {

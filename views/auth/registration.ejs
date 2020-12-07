@@ -4,22 +4,22 @@
       <form action="/auth/registration" method="POST" novalidate>
         <img class="mb-4" src="/static/logo.png" alt="Logo" height="48" />
         <h1 class="h3 mb-3 font-weight-normal">Register</h1>
-        <div class="form-group">
-					<label for="email" class="sr-only">Email</label>
+        <div class="mb-3">
+					<label for="email" class="visually-hidden">Email</label>
 					<input type="text" id="username" name="email" class="form-control <% if (typeof errors.email !== "undefined") { %> is-invalid <% } %>" placeholder="Email" value="<%=email%>" required autofocus />
 					<% if (typeof errors.email !== "undefined") { %>
 						<div class="invalid-message">
 							<%= Object.values(errors.email)[0] %> 
 						</div>
 					<% } %>
-					<label for="password" class="sr-only">Password</label>
+					<label for="password" class="visually-hidden">Password</label>
 					<input type="password" id="password" name="password" class="form-control <% if (typeof errors.password !== "undefined") { %> is-invalid <% } %>" placeholder="Password" required />
 					<% if (typeof errors.password !== "undefined") { %>
 						<div class="invalid-message">
 							<%= Object.values(errors.password)[0] %> 
 						</div>
 					<% } %>
-					<label for="verification" class="sr-only">Repeat Password</label>
+					<label for="verification" class="visually-hidden">Repeat Password</label>
 					<input type="password" id="password" name="verification" class="form-control <% if (typeof errors.verification !== "undefined") { %> is-invalid <% } %>" placeholder="Repeat Password" required />
 					<% if (typeof errors.verification !== "undefined") { %>
 						<div class="invalid-message">
@@ -27,10 +27,10 @@
 						</div>
 					<% } %>
         </div>
-        <div class="form-group">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">
+        <div class="mb-3 d-grid gap-2">
+          <button class="btn btn-lg btn-primary" type="submit">
             Register
-        </button>
+        	</button>
         </div>
         <p>or <a href="/auth/login">log in</a> with an existing account</p>
       </form>
