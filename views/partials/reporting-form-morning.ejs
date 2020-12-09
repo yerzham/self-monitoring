@@ -1,0 +1,60 @@
+<form id="morning-form" action="/behaviour/reporting/morning" method="POST"  <% if (!visible) { %>
+	class="d-none"
+<% } %>>
+	<div class="row mb-4">
+		<div class="col-lg-6">
+			<div class="row mb-4">
+				<label class="col-md-4">Date</label>
+				<div class="col-md-8">
+					<input type="date" name="reporting_date_morning" value="<%if (typeof data.reportingDateMorning !== "undefined") {%><%=data.reportingDateMorning%><%}else{%><%=dateValue%><%}%>" required class="form-control <% if (errors.reportingDateMorning) { %> is-invalid <% } %>">
+					<% if (typeof errors.reportingDateMorning !== "undefined") { %>
+						<div class="invalid-message">
+							<%= Object.values(errors.reportingDateMorning)[0] %> 
+						</div>
+					<% } %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="row mb-3">
+				<label class="col-md-4">Sleep duration (hours)</label>
+				<div class="col-md-8">
+					<input type="number" name="sleep_duration" value="<%if (typeof data.sleepDuration !== "undefined") {%><%=data.sleepDuration%><%}else{%>0<%}%>" min="0" step=".01" required class="form-control <% if (errors.sleepDuration) { %> is-invalid <% } %>">
+					<% if (errors.sleepDuration) { %>
+						<div class="invalid-message">
+							<%= Object.values(errors.sleepDuration)[0] %> 
+						</div>
+					<% } %>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-4">Sleep quality</label>
+				<div class="col-md-8">
+					<input type="range" name="sleep_quality" value="<%=data.sleepQuality%>" min="0" max="5" step="1" class="form-range <% if (errors.sleepQuality) { %> is-invalid <% } %>">
+					<% if (errors.sleepQuality) { %>
+						<div class="invalid-message">
+							<%= Object.values(errors.sleepQuality)[0] %> 
+						</div>
+					<% } %>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-4">Generic mood</label>
+				<div class="col-md-8">
+					<input type="range" name="generic_mood_morning" value="<%=data.genericMoodMorning%>" min="0" max="5" step="1" required class="form-range <% if (errors.genericMoodMorning) { %> is-invalid <% } %>">
+					<% if (errors.genericMoodMorning) { %>
+						<div class="invalid-message">
+							<%= Object.values(errors.genericMoodMorning)[0] %> 
+						</div>
+					<% } %>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6"></div>
+		<div class="d-flex justify-content-end">
+			<button type="submit" class="btn btn-lg btn-primary">Submit</button>
+		</div>
+	</div>
+</form>

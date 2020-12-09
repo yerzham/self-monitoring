@@ -7,7 +7,7 @@ const connectionPool = new Pool(config.database, CONCURRENT_CONNECTIONS);
 let cache = {};
 
 const executeQuery = async (query, ...params) => {
-	if (query.substring(0, 6).toUpperCase() === "INSERT"){
+	if (query.startsWith("INSERT") || query.startsWith("UPDATE")){
 		cache = {}
 	}
   const client = await connectionPool.connect();
@@ -24,7 +24,7 @@ const executeQuery = async (query, ...params) => {
 };
 
 const executeCachedQuery = async (query, ...params) => {
-	if (query.substring(0, 6).toUpperCase() === "INSERT"){
+	if (query.startsWith("INSERT") || query.startsWith("UPDATE")){
 		cache = {}
 	}
   const key = query + params.reduce((acc, o) => acc + "-" + o, "");

@@ -1,0 +1,74 @@
+<form id="evening-form" action="/behaviour/reporting/evening" method="POST" <% if (!visible) { %>
+	class="d-none"
+<% } %>>
+	<div class="row mb-4">
+		<div class="col-lg-6">
+			<div class="row mb-4">
+				<label class="col-md-4">Date</label>
+				<div class="col-md-8">
+					<input type="date" name="reporting_date_evening" value="<%if (typeof data.reportingDateEvening !== "undefined") {%><%=data.reportingDateEvening%><%}else{%><%=dateValue%><%}%>" required class="form-control" >
+					<% if (typeof errors.reportingDateEvening !== "undefined") { %>
+						<div class="invalid-message">
+							<%= Object.values(errors.reportingDateEvening)[0] %> 
+						</div>
+					<% } %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="row mb-3">
+				<label class="col-md-4">Time spent on sports and exercise (hours)</label>
+				<div class="col-md-8">
+					<input type="number" name="exercises_duration" value="<%if (typeof data.exercisesDuration !== "undefined") {%><%=data.exercisesDuration%><%}else{%>0<%}%>" min="0" step=".01" required class="form-control <% if (errors.exercisesDuration) { %> is-invalid <% } %>">
+					<% if (errors.exercisesDuration) { %>
+						<div class="invalid-message">
+							<%= Object.values(errors.exercisesDuration)[0] %> 
+						</div>
+					<% } %>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-4">Time spent studying (hours)</label>
+				<div class="col-md-8">
+					<input type="number" name="study_duration" value="<%if (typeof data.studyDuration !== "undefined") {%><%=data.studyDuration%><%}else{%>0<%}%>" min="0" step=".01" required class="form-control <% if (errors.studyDuration) { %> is-invalid <% } %>">
+					<% if (errors.studyDuration) { %>
+						<div class="invalid-message">
+							<%= Object.values(errors.studyDuration)[0] %> 
+						</div>
+					<% } %>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="row mb-3">
+				<label class="col-md-4">Regularity and quality of eating</label>
+				<div class="col-md-8">
+					<input type="range" name="eating_quality" value="<%=data.eatingQuality%>" min="0" max="5" step="1" oninput="eating_quality_value.value=value" class="form-range <% if (errors.eatingQuality) { %> is-invalid <% } %>">
+					<output id="eating_quality_value">5</output>
+					<% if (errors.eatingQuality) { %>
+						<div class="invalid-message">
+							<%= Object.values(errors.eatingQuality)[0] %> 
+						</div>
+					<% } %>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<label class="col-md-4">Generic mood</label>
+				<div class="col-md-8">
+					<input type="range" name="generic_mood_evening" value="<%=data.genericMoodEvening%>" min="0" max="5" step="1" oninput="generic_mood_evening_value.value=value" class="form-range <% if (errors.genericMoodEvening) { %> is-invalid <% } %>">
+					<output id="generic_mood_evening_value">5</output>
+					<% if (errors.genericMoodEvening) { %>
+						<div class="invalid-message">
+							<%= Object.values(errors.genericMoodEvening)[0] %> 
+						</div>
+					<% } %>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex justify-content-end">
+			<button type="submit" class="btn btn-lg btn-primary">Submit</button>
+		</div>
+	</div>
+</form>

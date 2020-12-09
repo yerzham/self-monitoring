@@ -13,5 +13,7 @@ router.get('/auth/logout', userController.logout)
 
 router.get('/', landingPageController.showLandingPage)
 router.get('/behaviour/reporting', reportingController.showReportingPage)
+router.post('/behaviour/reporting/morning', reportingController.postMorningReport)
+router.post('/behaviour/reporting/evening', reportingController.postEveningReport)
 
 export { router };
