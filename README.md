@@ -1,6 +1,9 @@
 # Self Monitoring web application
 Course Project for Aalto University Web Software Development course. https://wsd.cs.aalto.fi/web-software-development/
 
+### Demo:
+https://wsd-aalto.herokuapp.com/
+
 #### CREATE TABLE queries for tables used in the application:
 ```
 CREATE TABLE users
