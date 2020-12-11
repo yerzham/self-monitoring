@@ -1,6 +1,9 @@
 # Self Monitoring web application
 Course Project for Aalto University Web Software Development course. https://wsd.cs.aalto.fi/web-software-development/
 
+### Repo:
+https://github.com/yerzhan0/self-monitoring
+
 ### Demo:
 https://wsd-aalto.herokuapp.com/
 
