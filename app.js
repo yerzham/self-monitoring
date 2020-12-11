@@ -24,4 +24,7 @@ app.use(middleware.accessMiddleware);
 
 app.use(router.routes());
 
-app.listen({ port: 7777 });
+if (Deno.env.get('PORT'))
+	app.listen({ port: Number(Deno.env.get('PORT')) });
+else
+	app.listen({ port: 7777 });
