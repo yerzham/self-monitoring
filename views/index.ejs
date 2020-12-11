@@ -40,5 +40,12 @@
 		<p class="fs-4">Report more data to view a trend.</p>
 	<% } %>
 <% } %>
+	<hr class="my-4">
+	<h2>Average data of all user for the last 7 days:</h2>
+		<% 
+			const dataForWeek = averagesForWeek;
+			dataForWeek.type = "week";
+		%>
+		<%- include('./partials/summary-table.ejs', dataForWeek) %>
 </div>
 <%- include('./partials/footer.ejs') %>

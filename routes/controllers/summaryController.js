@@ -1,11 +1,8 @@
 import * as summaryService from "../../services/summaryService.js";
 import {getWeek, getYear, getMonth} from "../../utils/date.js"
 
-var averagesForWeek = {}
-var averagesForMonth = {}
-
-const getAvaragesForWeek = async (userID, week, request) => {
-  averagesForWeek = {
+const getAverages = (res) => {
+	const data = {
 		genericMood: null,
 		sleepQuality: null,
 		eatingQuality: null,
@@ -13,51 +10,23 @@ const getAvaragesForWeek = async (userID, week, request) => {
 		exercisesDuration: null,
 		studyDuration: null
 	};
-
-	let res = [];
-  if (request) {
-    const body = request.body();
-		const params = await body.value;
-		res = await summaryService.getAvaragesForWeek(userID, params.get("week"));
-	} else {
-		res = await summaryService.getAvaragesForWeek(userID, week);
-	}
 	if (res.length > 0){
-		averagesForWeek.genericMood = res[0].generic_mood;
-		averagesForWeek.sleepQuality =  res[0].sleep_quality;
-		averagesForWeek.eatingQuality = res[0].eating_quality;
-		averagesForWeek.sleepDuration = res[0].sleep_duration;
-		averagesForWeek.exercisesDuration = res[0].exercises_duration;
-		averagesForWeek.studyDuration = res[0].study_duration;
+		data.genericMood = res[0].generic_mood;
+		data.sleepQuality =  res[0].sleep_quality;
+		data.eatingQuality = res[0].eating_quality;
+		data.sleepDuration = res[0].sleep_duration;
+		data.exercisesDuration = res[0].exercises_duration;
+		data.studyDuration = res[0].study_duration;
 	}
+	return data;
+}
+
+const getAvaragesForWeek = async(userID, week) => {
+	return getAverages(await summaryService.getAvaragesForWeek(userID, week));
 };
 
-const getAvaragesForMonth = async (userID, month, request) => {
-  averagesForMonth = {
-		genericMood: null,
-		sleepQuality: null,
-		eatingQuality: null,
-		sleepDuration: null,
-		exercisesDuration: null,
-		studyDuration: null
-	};
-
-	let res = [];
-  if (request) {
-    const body = request.body();
-		const params = await body.value;
-		res = await summaryService.getAveragesForMonth(userID, params.get("month"));
-	} else {
-		res = await summaryService.getAveragesForMonth(userID, month);
-	}
-	if (res.length > 0){
-		averagesForMonth.genericMood = res[0].generic_mood;
-		averagesForMonth.sleepQuality =  res[0].sleep_quality;
-		averagesForMonth.eatingQuality = res[0].eating_quality;
-		averagesForMonth.sleepDuration = res[0].sleep_duration;
-		averagesForMonth.exercisesDuration = res[0].exercises_duration;
-		averagesForMonth.studyDuration = res[0].study_duration;
-	}
+const getAvaragesForMonth = async(userID, month) => {
+  return getAverages(await summaryService.getAveragesForMonth(userID, month));
 };
 
 const showSummaryPage = async({render, session}) => {
@@ -68,28 +37,25 @@ const showSummaryPage = async({render, session}) => {
 	const month = getMonth(lastMonth);
 	const [yearForWeek, week] = getWeek(lastWeek);
 	let user = await session.get('user');
-	await getAvaragesForWeek(user.user_id, week);
 	await getAvaragesForMonth(user.user_id, week);
 	render('/behaviour/summary.ejs', {
 		authenticated: await session.get('authenticated'),
 		user,
 		week: yearForWeek + "-W" + week,
 		month: yearForMonth + "-" + month,
-		averagesForWeek,
-		averagesForMonth
+		averagesForWeek: await getAvaragesForWeek(user.user_id, week),
+		averagesForMonth: await getAvaragesForMonth(user.user_id, month)
 	});
 }
 
 const getMonthData = async({session, params, response}) => {
 	let user = await session.get('user');
-	await getAvaragesForMonth(user.user_id, params.month);
-	response.body = averagesForMonth;
+	response.body = await getAvaragesForMonth(user.user_id, params.month);;
 }
 
 const getWeekData = async({session, params, response}) => {
 	let user = await session.get('user');
-	await getAvaragesForWeek(user.user_id, params.week);
-	response.body = averagesForWeek;
+	response.body = await getAvaragesForWeek(user.user_id, params.week);
 }
 
 export {showSummaryPage, getMonthData, getWeekData}

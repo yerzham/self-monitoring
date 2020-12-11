@@ -1,4 +1,32 @@
 import * as landingPageService from "../../services/landingPageService.js";
+import * as summaryService from "../../services/summaryService.js";
+
+const getAverages = (res) => {
+	const data = {
+		genericMood: null,
+		sleepQuality: null,
+		eatingQuality: null,
+		sleepDuration: null,
+		exercisesDuration: null,
+		studyDuration: null
+	};
+	if (res){
+		data.genericMood = res.generic_mood;
+		data.sleepQuality =  res.sleep_quality;
+		data.eatingQuality = res.eating_quality;
+		data.sleepDuration = res.sleep_duration;
+		data.exercisesDuration = res.exercises_duration;
+		data.studyDuration = res.study_duration;
+	}
+	return data;
+}
+
+const getPastSevenDayAveragesForAll = async() => {
+	const today = new Date();
+	const date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+	const res = await summaryService.getAveragesForAllBetween(date, today);
+	return getAverages(res);
+};
 
 const showLandingPage = async({render, session}) => {
 	const data = {
@@ -6,7 +34,8 @@ const showLandingPage = async({render, session}) => {
 		user: await session.get('user'),
 		moodAverage: null,
 		moodYesterday: null,
-		moodToday: null
+		moodToday: null,
+		averagesForWeek: await getPastSevenDayAveragesForAll()
 	}
 	if (!data.authenticated){
 		data.authenticated = false;
