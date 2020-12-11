@@ -15,7 +15,7 @@
 		<link rel="stylesheet" href="/static/style.css">
 		<% if (typeof scripts !== "undefined" && scripts instanceof Array) { 
 			scripts.forEach(script => {
-				%> <script src="/static/scripts/<%-script%>" defer></script> <%
+				%> <script src="/static/scripts/<%=script%>" defer></script> <%
 			});
 		} %>
 	</head>
@@ -24,7 +24,7 @@
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
 				<div class="container">
 					<a class="navbar-brand" href="/">
-						<img src="/static/logo.png" height="35" alt="">
+						<img src="/static/logo.svg" height="35" alt="">
 					</a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
@@ -36,7 +36,7 @@
 									<a class="nav-link <% if (typeof page !== "undefined" && page === "reporting") { %> active <% } %> " href="/behaviour/reporting">Reporting</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="/behaviour/summary">Summary</a>
+									<a class="nav-link <% if (typeof page !== "undefined" && page === "summary") { %> active <% } %>" href="/behaviour/summary">Summary</a>
 								</li>
 							<% } %>
 						</ul>
@@ -51,5 +51,5 @@
 				</div>
       </nav>
 		<% } %>
-		<div class="container">
+		<div class="container mt-4">
     

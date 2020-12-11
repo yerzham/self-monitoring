@@ -46,7 +46,7 @@
 				<label class="col-md-4">Regularity and quality of eating</label>
 				<div class="col-md-8">
 					<input type="range" name="eating_quality" value="<%=data.eatingQuality%>" min="0" max="5" step="1" oninput="eating_quality_value.value=value" class="form-range <% if (errors.eatingQuality) { %> is-invalid <% } %>">
-					<output id="eating_quality_value">5</output>
+					<output id="eating_quality_value"><% if (typeof data.eatingQuality  !== "undefined") { %><%=data.eatingQuality%><% } else {%>3<% } %></output>
 					<% if (errors.eatingQuality) { %>
 						<div class="invalid-message">
 							<%= Object.values(errors.eatingQuality)[0] %> 
@@ -58,7 +58,7 @@
 				<label class="col-md-4">Generic mood</label>
 				<div class="col-md-8">
 					<input type="range" name="generic_mood_evening" value="<%=data.genericMoodEvening%>" min="0" max="5" step="1" oninput="generic_mood_evening_value.value=value" class="form-range <% if (errors.genericMoodEvening) { %> is-invalid <% } %>">
-					<output id="generic_mood_evening_value">5</output>
+					<output id="generic_mood_evening_value"><% if (typeof data.genericMoodEvening  !== "undefined") { %><%=data.genericMoodEvening%><% } else {%>3<% } %></output>
 					<% if (errors.genericMoodEvening) { %>
 						<div class="invalid-message">
 							<%= Object.values(errors.genericMoodEvening)[0] %> 

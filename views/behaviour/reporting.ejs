@@ -1,10 +1,6 @@
 <%- include('../partials/header.ejs', {authenticated, user, page: "reporting", scripts: ["reporting.js"]}) %>
-<% 
-var date = new Date();
-const dateToday = date.getFullYear().toString() + '-' + (date.getMonth() + 1).toString().padStart(2, 0) +
-									'-' + date.getDate().toString().padStart(2, 0);
-%>
-<h1 class="mt-4 mb-3">Select the reporting option:</h1>
+<h1 class="mb-4">Behaviour Reporting</h1>
+<h2 class="mt-4 mb-3">Select the reporting option:</h2>
 <div class="row">
 	<div class="col-6">
 		<div class="row justify-content-center align-items-center" style="height: 150px;">

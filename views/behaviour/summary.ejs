@@ -1,0 +1,29 @@
+<%- include('../partials/header.ejs', {authenticated, user, page: "summary", scripts: ["summary.js"]}) %>
+<h1 class="mb-4">Behaviour Summary</h1>
+<div class="row">
+	<div class="col-lg-6">
+		<h2>For Month:</h2>
+		<form action="" class="mb-3">
+			<input type="month" value="<%=month%>" class="form-control" onchange="handleMonthChange()">
+		</form>
+		<label>Averages of all days in the month:</label>
+		<% 
+		const dataForMonth = averagesForMonth;
+		dataForMonth.type = "month";
+		%> 
+		<%- include('../partials/summary-table.ejs', dataForMonth) %>
+	</div>
+	<div class="col-lg-6">
+		<h2>For Week:</h2>
+		<form action="" class="mb-3">
+			<input type="week" value="<%=week%>" class="form-control" onchange="handleWeekChange()">
+		</form>
+		<label>Averages of all days in the week:</label>
+		<% 
+		const dataForWeek = averagesForWeek;
+		dataForWeek.type = "week";
+		%> 
+		<%- include('../partials/summary-table.ejs', dataForWeek) %>
+	</div>
+</div>
+<%- include('../partials/footer.ejs') %>

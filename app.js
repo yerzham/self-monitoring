@@ -1,4 +1,4 @@
-import { Application, viewEngine, engineFactory, adapterFactory, Session } from "./deps.js";
+import { Application, viewEngine, engineFactory, adapterFactory, Session, oakCors } from "./deps.js";
 import { router } from "./routes/routes.js";
 import * as middleware from './middlewares/middlewares.js';
 
@@ -15,6 +15,7 @@ app.use(viewEngine(oakAdapter, ejsEngine, {
   viewRoot: "./views"
 }));
 
+app.use(oakCors());
 app.use(middleware.errorMiddleware);
 app.use(middleware.requestTimingMiddleware);
 app.use(middleware.serveStaticFilesMiddleware);

@@ -11,11 +11,10 @@ const serveFavicon = async(context, next) => {
 }
 
 const accessMiddleware = async({request, response, session}, next) => {
-  if (!request.url.pathname.startsWith('/auth') && request.url.pathname !== '/' && !request.url.pathname.startsWith('/api') && !(await session.get('authenticated'))) {
-    response.redirect('/auth/login');
-    //await next();
-  } else {
+  if (request.url.pathname.startsWith('/auth') || request.url.pathname.startsWith('/api') || request.url.pathname === '/' || (await session.get('authenticated'))) {
     await next();
+  } else {
+    response.redirect('/auth/login');
   }
 }
 
@@ -23,7 +22,8 @@ const errorMiddleware = async(context, next) => {
   try {
     await next();
   } catch (e) {
-    console.log(e);
+		console.log(e);
+		context.response.status = 500;
   }
 }
   
@@ -34,9 +34,9 @@ const requestTimingMiddleware = async({ request, session }, next) => {
 	const user = await session.get('user')
 	if (typeof user !== "undefined" && user !== {}){
 		const userId = (await session.get('user')).user_id;
-  	console.log(`[${new Date().toLocaleString()}] ${request.method} ${request.url.pathname} by ${userId} - ${ms} ms`);
+  	console.log(`[${new Date().toLocaleString()}] ${request.method} ${request.url.pathname} (by ${userId}) - ${ms} ms`);
 	} else {
-		console.log(`[${new Date().toLocaleString()}] ${request.method} ${request.url.pathname} by anonymous - ${ms} ms`);
+		console.log(`[${new Date().toLocaleString()}] ${request.method} ${request.url.pathname} (by anonymous) - ${ms} ms`);
 	}
 	
 }

@@ -1,0 +1,64 @@
+<table class="table">
+	<tbody>
+		<tr>
+			<th scope="row">Sleep duration (hours)</th>
+			<td id = <%="sleepDuration-"+type%>>
+				<% if (sleepDuration) { %>
+					<%= sleepDuration %> 
+				<% } else { %>
+					No data
+				<% } %>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Time spent on sports and exercise (hours)</th>
+			<td id = <%="exercisesDuration-"+type%>>
+				<% if (exercisesDuration) { %>
+					<%= exercisesDuration %> 
+				<% } else { %>
+					No data
+				<% } %>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Time spent studying (hours)</th>
+			<td id = <%="studyDuration-"+type%>>
+				<% if (studyDuration) { %>
+					<%= studyDuration %> 
+				<% } else { %>
+					No data
+				<% } %>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Sleep quality</th>
+			<td id = <%="sleepQuality-"+type%>>
+				<% if (sleepQuality) { %>
+					<%= sleepQuality %> 
+				<% } else { %>
+					No data
+				<% } %>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Regularity and quality of eating</th>
+			<td id = <%="eatingQuality-"+type%>>
+				<% if (eatingQuality) { %>
+					<%= eatingQuality %> 
+				<% } else { %>
+					No data
+				<% } %>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Generic mood</th>
+			<td id = <%="genericMood-"+type%>>
+				<% if (genericMood) { %>
+					<%= genericMood %> 
+				<% } else { %>
+					No data
+				<% } %>
+			</td>
+		</tr>
+	</tbody>
+</table>

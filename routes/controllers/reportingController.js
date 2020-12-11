@@ -1,10 +1,7 @@
 import * as reportingService from "../../services/reportingService.js";
+import { getDate } from "../../utils/date.js"
 import { validate, required, isDate, isNumeric, isInt, maxNumber, minNumber } from "../../deps.js"
 
-var morningFormData = {}
-var eveningFormData = {}
-var errorsGlobal = {}
-var reporting = "";
 const morningValidationRules = {
 	reportingDateMorning: [required, isDate],
 	sleepDuration: [required, isNumeric, minNumber(0.0)],
@@ -45,7 +42,7 @@ const eveningValidationMessages =  {
 }
 
 const getMorningFormData = async (request) => {
-  morningFormData = {
+  const morningFormData = {
 		reportingDateMorning: "",
 		sleepDuration: null,
 		sleepQuality: null,
@@ -62,10 +59,12 @@ const getMorningFormData = async (request) => {
 		morningFormData.genericMoodMorning = parseInt(params.get("generic_mood_morning"));
 		if (isNaN(morningFormData.sleepDuration)) morningFormData.sleepDuration = null;
 	}
+
+	return morningFormData;
 };
 
 const getEveningFormData = async (request) => {
-  eveningFormData = {
+  const eveningFormData = {
 		reportingDateEvening: "",
 		exercisesDuration: null,
 		studyDuration: null,
@@ -85,68 +84,74 @@ const getEveningFormData = async (request) => {
 		if (isNaN(eveningFormData.exercisesDuration)) eveningFormData.exercisesDuration = null;
 		if (isNaN(eveningFormData.studyDuration)) eveningFormData.studyDuration = null;
 	}
+
+	return eveningFormData;
 };
 
-const showReportingPage = async({render, session}) => {
-	let authenticated = await session.get('authenticated');
+const showReportingPage = async({render, session, cookies}) => {
 	let user = await session.get('user');
-	var date = new Date();
-	const dateValue = date.getFullYear().toString() + '-' + (date.getMonth() + 1).toString().padStart(2, 0) +
-										'-' + date.getDate().toString().padStart(2, 0);
+	const dateValue = getDate();
+	const errors = cookies.get('errors') ? JSON.parse(cookies.get('errors')) : {};
+	let morningFormData = await session.get('morningFormData');
+	morningFormData = morningFormData ? morningFormData : {};
+	let eveningFormData = await session.get('eveningFormData');
+	eveningFormData = eveningFormData ? eveningFormData : {};
 	render('behaviour/reporting.ejs', {
-		authenticated, 
+		authenticated: await session.get('authenticated'), 
 		user, 
-		reporting, 
-		errors: errorsGlobal, 
+		reporting: cookies.get('reporting'), 
+		errors, 
 		dateToday: dateValue,
 		data: Object.assign(morningFormData,eveningFormData),
 		morningReported: await reportingService.isReportedForMorning(user.user_id, dateValue), 
 		eveningReported: await reportingService.isReportedForEvening(user.user_id, dateValue)});
-	reporting = "";
-	errorsGlobal = {};
-	morningFormData = {};
-	eveningFormData = {};
+	cookies.set('reporting', null);
+	cookies.set('errors', null);
+	await session.set('morningFormData', null);
+	await session.set('eveningFormData', null);
 }
 
-const postMorningReport = async({request, response, session}) =>{
-	let user = await session.get('user');
-	await getMorningFormData(request);
-	const [passes, errors] = await validate(morningFormData, morningValidationRules, {messages: morningValidationMessages});
-	errorsGlobal = errors;
+const postMorningReport = async({request, response, session, cookies}) =>{
+	const user = await session.get('user');
+	const data = await getMorningFormData(request);
+	await session.set('morningFormData', data);
+	const [passes, errors] = await validate(data, morningValidationRules, {messages: morningValidationMessages});
 	if (!passes){
-		reporting = "morning";
+		cookies.set('errors', JSON.stringify(errors));
+		cookies.set('reporting', "morning");
 		response.redirect('/behaviour/reporting');
 	} else {
 		await reportingService.setMorningData(
 			user.user_id, 
-			morningFormData.reportingDateMorning, 
-			morningFormData.sleepDuration, 
-			morningFormData.sleepQuality, 
-			morningFormData.genericMoodMorning
+			data.reportingDateMorning, 
+			data.sleepDuration, 
+			data.sleepQuality, 
+			data.genericMoodMorning
 		);
-		morningFormData = {};
+		await session.set('morningFormData', null);
 		response.redirect('/behaviour/reporting');
 	}
 }
 
-const postEveningReport = async({request, response, session}) =>{
-	let user = await session.get('user');
-	await getEveningFormData(request);
-	const [passes, errors] = await validate(eveningFormData, eveningValidationRules, {messages: eveningValidationMessages});
-	errorsGlobal = errors;
+const postEveningReport = async({request, response, session, cookies}) =>{
+	const user = await session.get('user');
+	const data = await getEveningFormData(request)
+	await session.set('eveningFormData', data);
+	const [passes, errors] = await validate(data, eveningValidationRules, {messages: eveningValidationMessages});
 	if (!passes){
-		reporting = "evening";
+		cookies.set('errors', JSON.stringify(errors));
+		cookies.set('reporting', "evening");
 		response.redirect('/behaviour/reporting');
 	} else {
 		await reportingService.setEveningData(
 			user.user_id, 
-			eveningFormData.reportingDateEvening,
-			eveningFormData.exercisesDuration,
-			eveningFormData.studyDuration,
-			eveningFormData.eatingQuality,
-			eveningFormData.genericMoodEvening
+			data.reportingDateEvening,
+			data.exercisesDuration,
+			data.studyDuration,
+			data.eatingQuality,
+			data.genericMoodEvening
 		);
-		eveningFormData = {};
+		await session.set('eveningFormData', null);
 		response.redirect('/behaviour/reporting');
 	}
 }
