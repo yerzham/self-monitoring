@@ -21,10 +21,10 @@ CREATE TABLE reports
     exercises_duration real,
     study_duration real,
     eating_quality smallint,
-  	sleep_quality smallint,
+    sleep_quality smallint,
     generic_mood_morning smallint,
-  	generic_mood_evening smallint,
-  	generic_mood real NOT NULL,
+    generic_mood_evening smallint,
+    generic_mood real NOT NULL,
     PRIMARY KEY (report_id),
   	UNIQUE (user_id, reporting_date),
     FOREIGN KEY (user_id)
@@ -33,3 +33,10 @@ CREATE TABLE reports
         ON DELETE RESTRICT
 );
 ```
+
+
+### Running the application locally:
+1. Follow the Deno [installation guidelines](https://deno.land/manual/getting_started/installation).
+2. Create a local or hosted database in PostgreSQL using the above CREATE TABLE queries.
+3. Change the environment variable values in the following command, then run it:\
+$`PGPORT=[port] PGHOST=[hostname] PGDATABASE=[database] PGUSER=[user] PGPASSWORD=[password] deno run --allow-net --allow-read --allow-env --unstable app.js`
