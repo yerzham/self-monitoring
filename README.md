@@ -45,4 +45,6 @@ CREATE TABLE reports
 1. Follow the Deno [installation guidelines](https://deno.land/manual/getting_started/installation).
 2. Create a local or hosted database in PostgreSQL using the above CREATE TABLE queries.
 3. Change the environment variable values in the following command, then run it:\
-$`PGPORT=[port] PGHOST=[hostname] PGDATABASE=[database] PGUSER=[user] PGPASSWORD=[password] deno run --allow-net --allow-read --allow-env --unstable app.js`
+```
+DATABASE_URL=[PostgresQL database URL] deno run --allow-all --unstable app.js
+```
