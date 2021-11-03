@@ -1,51 +1,56 @@
 <%- include('./partials/header.ejs', {authenticated, user})%>
 <div class="jumbotron">
-	<div class="mb-4"></div>
-<% if (!authenticated) { %>
-	<h1 class="display-4">Monitor your day!</h1>
-	<p class="lead">Here you can self-monitor your daily mood, sleep duration and sleep quality, regularity and quality of eating, time spent on sports and exercise, and time spent studying.</p>
-	<hr class="my-4">
-	<p>Register and start getting insight about your daily life!</p>
-	<a class="btn btn-primary btn-lg" href="/auth/registration" role="button">Register</a>
-<% } else { %>
-	<h1 class="display-4">Welcome back!</h1>
-	<p class="lead">Here you can self-monitor your daily mood, sleep duration and sleep quality, regularity and quality of eating, time spent on sports and exercise, and time spent studying.</p>
-	<hr class="my-4">
-	<p>Start entering data to get more insight about your daily life!</p>
-	<a class="btn btn-primary btn-lg" href="/behaviour/reporting" role="button">Report Data</a>
-	<hr class="my-4">
-	<% if (moodToday !== null && moodYesterday !== null) { %>
-		<h2>Average mood of the last two days: <span id="mood"><%=moodAverage%></span></h2>
-		<p class="fs-4">Mood 
-			<% if (moodToday >= moodYesterday) { %>
-				<span style="color: green">increased</span>
-			<% } else { %>
-				<span style="color: red">decreased</span>
-			<% } %>
-			from <%=moodYesterday%> to <%=moodToday%>.
-			<% if (moodToday >= moodYesterday) { %>
-				Things are looking bright today!
-			<% } else { %>
-				Things are looking gloomy today...
-			<% } %>
-		</p>
-	<% } else { %>
-		<%if (moodToday !== null) { %>
-			<h2>Today's mood: <%=moodToday%> </h2>
-		<% } else if (moodYesterday !== null) { %>
-			<h2>Yersterday's mood: <%=moodYesterday%> </h2>
-		<% } else { %>
-			<h2>No mood reported for today and yesterday...</h2>
-		<% } %>
-		<p class="fs-4">Report more data to view a trend.</p>
-	<% } %>
-<% } %>
-	<hr class="my-4">
-	<h2>Average data of all users for the last 7 days:</h2>
-		<% 
-			const dataForWeek = averagesForWeek;
-			dataForWeek.type = "week";
-		%>
-		<%- include('./partials/summary-table.ejs', dataForWeek) %>
+  <div class="mb-4"></div>
+  <% if (!authenticated) { %>
+  <h1 class="display-4">Monitor your day!</h1>
+  <p class="lead">
+    Here you can self-monitor your daily mood, sleep duration and sleep quality,
+    regularity and quality of eating, time spent on sports and exercise, and
+    time spent studying.
+  </p>
+  <hr class="my-4" />
+  <p>Register and start getting insight about your daily life!</p>
+  <a class="btn btn-primary btn-lg" href="/auth/registration" role="button"
+    >Register</a
+  >
+  <% } else { %>
+  <h1 class="display-4">Welcome back!</h1>
+  <p class="lead">
+    Here you can self-monitor your daily mood, sleep duration and sleep quality,
+    regularity and quality of eating, time spent on sports and exercise, and
+    time spent studying.
+  </p>
+  <hr class="my-4" />
+  <p>Start entering data to get more insight about your daily life!</p>
+  <a class="btn btn-primary btn-lg" href="/behaviour/reporting" role="button"
+    >Report Data</a
+  >
+  <hr class="my-4" />
+  <% if (moodToday !== null && moodYesterday !== null) { %>
+  <h2>
+    Average mood of the last two days: <span id="mood"><%=moodAverage%></span>
+  </h2>
+  <p class="fs-4">
+    Mood <% if (moodToday >= moodYesterday) { %>
+    <span style="color: green">increased</span>
+    <% } else { %>
+    <span style="color: red">decreased</span>
+    <% } %> from <%=moodYesterday%> to <%=moodToday%>. <% if (moodToday >=
+    moodYesterday) { %> Things are looking bright today! <% } else { %> Things
+    are looking gloomy today... <% } %>
+  </p>
+  <% } else { %> <%if (moodToday !== null) { %>
+  <h2>Today's mood: <%=moodToday%></h2>
+  <% } else if (moodYesterday !== null) { %>
+  <h2>Yersterday's mood: <%=moodYesterday%></h2>
+  <% } else { %>
+  <h2>No mood reported for today and yesterday...</h2>
+  <% } %>
+  <p class="fs-4">Report more data to view a trend.</p>
+  <% } %> <% } %>
+  <hr class="my-4" />
+  <h2>Average data of all users for the last 7 days:</h2>
+  <% const dataForWeek = averagesForWeek; dataForWeek.type = "week"; %> <%-
+  include('./partials/summary-table.ejs', dataForWeek) %>
 </div>
 <%- include('./partials/footer.ejs') %>
